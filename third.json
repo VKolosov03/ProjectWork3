@@ -1,0 +1,71 @@
+{
+    "0": {
+        "name": "Hawaiian pizza",
+        "price": 135,
+        "ingredients": {
+            "pizza sauce": 250,
+            "mozzarella": 150,
+            "pineapple": 150,
+            "chicken": 150
+        }
+    },
+    "1": {
+        "name": "Mushroom pizza",
+        "price": 99,
+        "ingredients": {
+            "mushrooms": 7,
+            "mozzarella": 250,
+            "pepperoni": 400,
+            "Alfredo sauce": 7
+        }
+    },
+    "2": {
+        "name": "Margherita pizza",
+        "price": 99,
+        "ingredients": {
+            "pizza sauce": 250,
+            "mozzarella": 150
+        }
+    },
+    "3": {
+        "name": "Mexican pizza",
+        "price": 195,
+        "ingredients": {
+            "hunting sausages": 7,
+            "barbecue sauce": 250,
+            "chipotle": 400
+        }
+    },
+    "4": {
+        "name": "Meat pizza",
+        "price": 263,
+        "ingredients": {
+            "chicken": 250,
+            "pepperoni": 400,
+            "pizza sauce": 7,
+            "bacon": 7,
+            "veal": 60,
+            "ham": 250
+        }
+    },
+    "5": {
+        "name": "Pepperoni pizza",
+        "price": 135,
+        "ingredients": {
+            "mozzarella": 250,
+            "pepperoni": 400,
+            "pizza sauce": 7
+        }
+    },
+    "6": {
+        "name": "Four cheeses pizza",
+        "price": 205,
+        "ingredients": {
+            "mozzarella": 250,
+            "parmesan": 400,
+            "Alfredo sauce": 7,
+            "cheddar": 60,
+            "feta": 250
+        }
+    }
+}
