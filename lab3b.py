@@ -120,7 +120,7 @@ class Order(Pizza_day):
             return ','.join(i for i in self.extra_order.keys())
 
     def buy(self):
-        return self.buy_pizza()+" and you've also added "+self.buy_ingredients()+"\nYou must pay "+str('{:.2f}'.format(self.price))+" bucks"
+        return self.buy_pizza()+" and you've also added "+self.buy_ingredients()+"\nYou must pay "+'{:.2f}'.format(self.price)+" bucks"
             
 
 
