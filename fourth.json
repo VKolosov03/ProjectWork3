@@ -1,18 +1,63 @@
 {
-    "pizza sauce": 2500,
-    "mozzarella": 3500,
-    "pineapple": 5000,
-    "chicken": 5000,
-    "mushrooms": 5000,
-    "pepperoni": 5000,
-    "Alfredo sauce": 5000,
-    "hunting sausages": 5000,
+    "pizza sauce": {
+        "weight": 3500,
+        "price": 1.1
+    },
+    "mozzarella": {
+        "weight": 4100,
+        "price": 1.15
+    },
+    "pineapple": {
+        "weight": 5000,
+        "price": 1.2
+    },
+    "chicken": {
+        "weight": 5000,
+        "price": 1.25
+    },
+    "mushrooms": {
+        "weight": 5000,
+        "price": 1.3
+    },
+    "pepperoni": {
+        "weight": 5000,
+        "price": 1.35
+    },
+    "Alfredo sauce": {
+        "weight": 5000,
+        "price": 1.4
+    },
+    "hunting sausages": {
+        "weight": 5000,
+        "price": 1.45
+    },
     "barbecue sauce": 5000,
-    "chipotle": 5000,
-    "bacon": 2600,
-    "veal": 4200,
-    "ham": 5000,
-    "parmesan": 5000,
-    "cheddar": 5000,
-    "feta": 3796.0
+    "chipotle": {
+        "weight": 5000,
+        "price": 1.5
+    },
+    "bacon": {
+        "weight": 3200,
+        "price": 1.55
+    },
+    "veal": {
+        "weight": 4400,
+        "price": 1.6
+    },
+    "ham": {
+        "weight": 5000,
+        "price": 1.65
+    },
+    "parmesan": {
+        "weight": 5000,
+        "price": 1.7
+    },
+    "cheddar": {
+        "weight": 5000,
+        "price": 1.75
+    },
+    "feta": {
+        "weight": 4097.0,
+        "price": 1.8
+    }
 }

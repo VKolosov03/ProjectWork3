@@ -35,6 +35,7 @@ class Order(Pizza_day):
     def __init__(self,**extra_order):
         super().__init__()
         self.extra_order=extra_order
+        self.price=0
 
     @property
     def extra_order(self):
@@ -53,6 +54,19 @@ class Order(Pizza_day):
                         raise TypeError
         self.__extra_order = extra_order
 
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self,price):
+        if not isinstance(price,float) and not isinstance(price,int):
+                if price.isdigit():
+                    price=float(price)
+                else:
+                    raise TypeError
+        self.__price = price
+
     def buy_pizza(self):
         json_pizza=""""""
         json_ingredients=""""""
@@ -63,10 +77,11 @@ class Order(Pizza_day):
         for key1 in json_pizza[self.day]['ingredients']:
             for key2 in json_ingredients:
                 if key1==key2:
-                    if json_ingredients[key2]-json_pizza[self.day]['ingredients'][key1]>=MIN_NUMB:
-                        json_ingredients[key2]-=json_pizza[self.day]['ingredients'][key1]
+                    if json_ingredients[key2]['weight']-json_pizza[self.day]['ingredients'][key1]>=MIN_NUMB:
+                        json_ingredients[key2]['weight']-=json_pizza[self.day]['ingredients'][key1]
                     else:
                         raise RuntimeError("Sold out!")
+        self.price+=json_pizza[self.day]['price']
         with open('third.json', 'w') as open_first:
             json.dump(json_pizza,open_first,indent=4)
         with open('fourth.json', 'w') as open_second:
@@ -91,8 +106,9 @@ class Order(Pizza_day):
                         for key3 in json_pizza[self.day]['ingredients']:
                             if key1==key3:
                                 raise RuntimeError("You can't add this!")
-                        if json_ingredients[key2]-self.extra_order[key1]>=MIN_NUMB:
-                            json_ingredients[key2]-=self.extra_order[key1]
+                        if json_ingredients[key2]['weight']-self.extra_order[key1]>=MIN_NUMB:
+                            json_ingredients[key2]['weight']-=self.extra_order[key1]
+                            self.price+=json_ingredients[key2]['price']*self.extra_order[key1]
                         else:
                             raise RuntimeError("Sold out!")
                 if ind==0:
@@ -104,7 +120,7 @@ class Order(Pizza_day):
             return ','.join(i for i in self.extra_order.keys())
 
     def buy(self):
-        return self.buy_pizza()+" and you've also added "+self.buy_ingredients()
+        return self.buy_pizza()+" and you've also added "+self.buy_ingredients()+"\nYou must pay "+str('{:.2f}'.format(self.price))+" bucks"
             
 
 
