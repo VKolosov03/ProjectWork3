@@ -1,13 +1,11 @@
 import json
 import datetime
 
-class Ticket:
-
-	def __init__(self,surname,name,ticket_type,time):
+class Person:
+	def __init__(self,surname,name,ticket_type):
 		self.name=name
 		self.surname=surname
 		self.ticket_type=ticket_type
-		self.time=time
 
 	@property
 	def name(self):
@@ -38,6 +36,23 @@ class Ticket:
 		if not isinstance(ticket_type,bool):
 			raise TypeError
 		self.__ticket_type = ticket_type
+
+	def get_tickets_by_name(self):
+		ticket_string=""
+		with open('second.json', 'r') as open_second:
+			json_customer=json.load(open_second)
+			for key1 in json_customer:
+				if json_customer[key1]['name']==self.name and json_customer[key1]['surname']==self.surname:
+					for key2 in json_customer[key1]:
+						ticket_string=ticket_string+key2+": "+str(json_customer[key1][key2])+'\n'
+					ticket_string+='\n'
+		return ticket_string
+
+class Ticket(Person):
+
+	def __init__(self,surname,name,ticket_type,time):
+		super().__init__(surname,name,ticket_type)
+		self.time=time
 
 	@property
 	def time(self):
@@ -136,5 +151,5 @@ customer2.buy()
 customer3.buy()
 print(customer1.get_string('1-s'),"\n")
 print(customer2.get_string('2-l'),"\n")
-print(customer3.get_string('1-a'),"\n")
+print(customer3.get_tickets_by_name(),"\n")
 print(customer1.get_price(datetime.date.today()))
