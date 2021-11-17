@@ -100,9 +100,9 @@ class Ticket(Person):
 		json_tickets['ticket_type'][ticket_id[2]]['amount']-=1
 		json_tickets['ticket_type'][ticket_id[2]]['next_ticket_number']+=1
 		with open('first.json', 'w') as open_first:
-			json.dump(json_tickets,open_first)
+			json.dump(json_tickets,open_first, indent=4)
 		with open('second.json', 'w') as open_second:
-			json.dump(json_customer,open_second)
+			json.dump(json_customer,open_second, indent=4)
 
 	@staticmethod
 	def search_id(ticket_id):
