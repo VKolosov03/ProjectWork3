@@ -1,6 +1,11 @@
 import json
 import datetime
 
+MIN_DAYS=10
+MAX_DAYS=60
+MIN_TICKETS=1
+ID_LEN=3
+
 class Person:
 	def __init__(self,surname,name,ticket_type):
 		self.name=name
@@ -75,13 +80,13 @@ class Ticket(Person):
 		if self.ticket_type:
 			ticket_id=str(json_tickets['ticket_type']['s']['next_ticket_number'])+'-s'
 		else:
-			if (datetime.date(year=json_tickets['year'],month=json_tickets['month'],day=json_tickets['day'])-self.time).days>=60:
+			if (datetime.date(year=json_tickets['year'],month=json_tickets['month'],day=json_tickets['day'])-self.time).days>=MAX_DAYS:
 				ticket_id=str(json_tickets['ticket_type']['a']['next_ticket_number'])+'-a'
-			elif (datetime.date(year=json_tickets['year'],month=json_tickets['month'],day=json_tickets['day'])-self.time).days<10:
+			elif (datetime.date(year=json_tickets['year'],month=json_tickets['month'],day=json_tickets['day'])-self.time).days<MIN_DAYS:
 				ticket_id=str(json_tickets['ticket_type']['l']['next_ticket_number'])+'-l'
 			else:
 				ticket_id=str(json_tickets['ticket_type']['r']['next_ticket_number'])+'-r'
-		if json_tickets['ticket_type'][ticket_id[2]]['amount']<1:
+		if json_tickets['ticket_type'][ticket_id[2]]['amount']<MIN_TICKETS:
 			raise RuntimeError("Sold out!")
 		if ticket_id not in json_customer:
 			json_customer[ticket_id] = {}
@@ -103,14 +108,11 @@ class Ticket(Person):
 	def search_id(ticket_id):
 		if not isinstance(ticket_id,str):
 			raise TypeError
-		if len(ticket_id)!=3 or not ticket_id[0].isdigit() or ticket_id[1]!='-' or ticket_id[2] not in "asrl":
+		if len(ticket_id)!=ID_LEN or not ticket_id[0].isdigit() or ticket_id[1]!='-' or ticket_id[2] not in "asrl":
 			raise RuntimeError("Wrong formation!")
 		with open('second.json', 'r') as open_second:
 			json_customer=json.load(open_second)
-			if ticket_id not in json_customer:
-				return False
-			else:
-				return True
+			return False if ticket_id not in json_customer else True
 
 	@staticmethod
 	def get_price(time):
@@ -120,9 +122,9 @@ class Ticket(Person):
 			for key in json_tickets['ticket_type']:
 				price_string=price_string+json_tickets['ticket_type'][key]['name']+'-'+str(json_tickets['ticket_type']
 					[key]['discount']*json_tickets['price'])+'\n'
-			if (datetime.date(year=json_tickets['year'],month=json_tickets['month'],day=json_tickets['day'])-time).days>=60:
+			if (datetime.date(year=json_tickets['year'],month=json_tickets['month'],day=json_tickets['day'])-time).days>=MAX_DAYS:
 				price_string=price_string+json_tickets['ticket_type']['a']['name']
-			elif (datetime.date(year=json_tickets['year'],month=json_tickets['month'],day=json_tickets['day'])-time).days<10:
+			elif (datetime.date(year=json_tickets['year'],month=json_tickets['month'],day=json_tickets['day'])-time).days<MIN_DAYS:
 				price_string=price_string+json_tickets['ticket_type']['l']['name']
 			else:
 				price_string=price_string+json_tickets['ticket_type']['r']['name']
