@@ -1,10 +1,10 @@
 {
     "pizza sauce": {
-        "weight": 3500,
+        "weight": 3000,
         "price": 1.1
     },
     "mozzarella": {
-        "weight": 4100,
+        "weight": 3800,
         "price": 1.15
     },
     "pineapple": {
@@ -28,20 +28,23 @@
         "price": 1.4
     },
     "hunting sausages": {
-        "weight": 5000,
+        "weight": 4944,
         "price": 1.45
     },
-    "barbecue sauce": 5000,
+    "barbecue sauce": {
+        "weight": 3000,
+        "price": 1.45
+    },
     "chipotle": {
-        "weight": 5000,
+        "weight": 1800,
         "price": 1.5
     },
     "bacon": {
-        "weight": 3200,
+        "weight": 800,
         "price": 1.55
     },
     "veal": {
-        "weight": 4400,
+        "weight": 3600,
         "price": 1.6
     },
     "ham": {
@@ -57,7 +60,7 @@
         "price": 1.75
     },
     "feta": {
-        "weight": 4097.0,
+        "weight": 2893.0,
         "price": 1.8
     }
 }

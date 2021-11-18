@@ -7,17 +7,7 @@ class Pizza_day:
     def __init__(self):
         self.day=str(datetime.datetime.now().weekday())
 
-    @property
-    def day(self):
-        return self.__day
-
-    @day.setter
-    def day(self,day):
-        if not isinstance(day,str):
-            raise TypeError
-        self.__day = day
-
-    def get_pizza(self):
+    def __str__(self):
         pizza_string="Pizza of the day\n"
         with open('third.json', 'r') as open_first:
             json_pizza=json.load(open_first)
@@ -30,12 +20,26 @@ class Pizza_day:
                     pizza_string+=key+": "+str(json_pizza[self.day][key])+'\n'
         return pizza_string+'\n'
 
+    @property
+    def day(self):
+        return self.__day
+
+    @day.setter
+    def day(self,day):
+        if not isinstance(day,str):
+            raise TypeError
+        self.__day = day
+
 class Order(Pizza_day):
 
     def __init__(self,**extra_order):
         super().__init__()
         self.extra_order=extra_order
         self.price=0
+
+    def __str__(self):
+        return self.buy_pizza()+" and you've also added "+self.buy_ingredients()+"\nYou must pay "+'{:.2f}'.format(self.price)+" bucks"
+        #return super().__str__()+'\n'+self.buy_pizza()+" and you've also added "+self.buy_ingredients()+"\nYou must pay "+'{:.2f}'.format(self.price)+" bucks"
 
     @property
     def extra_order(self):
@@ -68,8 +72,6 @@ class Order(Pizza_day):
         self.__price = price
 
     def buy_pizza(self):
-        json_pizza=""""""
-        json_ingredients=""""""
         with open('third.json', 'r') as open_first:
             json_pizza=json.load(open_first)
         with open('fourth.json', 'r') as open_second:
@@ -89,43 +91,37 @@ class Order(Pizza_day):
         return "You've just bought a "+json_pizza[self.day]['name']
 
     def buy_ingredients(self):
-        json_pizza=""""""
-        json_ingredients=""""""
         ind=0
         if len(self.extra_order)<=MIN_NUMB:
             return "nothing"
-        else:
-            with open('third.json', 'r') as open_first:
-                json_pizza=json.load(open_first)
-            with open('fourth.json', 'r') as open_second:
-                json_ingredients=json.load(open_second)
-            for key1 in self.extra_order:
-                for key2 in json_ingredients:
-                    if key1==key2:
-                        ind=1
-                        for key3 in json_pizza[self.day]['ingredients']:
-                            if key1==key3:
-                                raise RuntimeError("You can't add this!")
-                        if json_ingredients[key2]['weight']-self.extra_order[key1]>=MIN_NUMB:
-                            json_ingredients[key2]['weight']-=self.extra_order[key1]
-                            self.price+=json_ingredients[key2]['price']*self.extra_order[key1]
-                        else:
-                            raise RuntimeError("Sold out!")
-                if ind==0:
+        with open('third.json', 'r') as open_first:
+            json_pizza=json.load(open_first)
+        with open('fourth.json', 'r') as open_second:
+            json_ingredients=json.load(open_second)
+        for key1 in self.extra_order:
+            for key3 in json_pizza[self.day]['ingredients']:
+                if key1==key3:
                     raise RuntimeError("You can't add this!")
-            with open('third.json', 'w') as open_first:
-                json.dump(json_pizza,open_first,indent=4)
-            with open('fourth.json', 'w') as open_second:
-                json.dump(json_ingredients,open_second,indent=4)
-            return ','.join(i for i in self.extra_order.keys())
-
-    def buy(self):
-        return self.buy_pizza()+" and you've also added "+self.buy_ingredients()+"\nYou must pay "+'{:.2f}'.format(self.price)+" bucks"
+            for key2 in json_ingredients:
+                if key1==key2:
+                    ind=1
+                    if json_ingredients[key2]['weight']-self.extra_order[key1]<MIN_NUMB:
+                        raise RuntimeError("Sold out!")
+                    json_ingredients[key2]['weight']-=self.extra_order[key1]
+                    self.price+=json_ingredients[key2]['price']*self.extra_order[key1]
+            if ind==0:
+                raise RuntimeError("You can't add this!")
+            ind=0
+        with open('third.json', 'w') as open_first:
+            json.dump(json_pizza,open_first,indent=4)
+        with open('fourth.json', 'w') as open_second:
+            json.dump(json_ingredients,open_second,indent=4)
+        return ','.join(i for i in self.extra_order.keys())
             
 
 
 
-
+pizza=Pizza_day()
 customer1=Order(bacon=300,veal=100,feta=150.5)
-print(customer1.get_pizza())
-print(customer1.buy())
+print(pizza)
+print(customer1)
